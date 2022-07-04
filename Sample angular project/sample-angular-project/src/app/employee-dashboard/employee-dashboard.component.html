@@ -1,0 +1,86 @@
+<body>
+<nav class="navbar navbar-light" style="background-color: darkblue;"> 
+    <div class="container-fluid">
+       <h1 style="color: aliceblue;">Basic employee management system</h1>
+        <div class="d-flex">
+            <button type="button" (click)="clickAddEmpBtn()" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Add
+                Employee</button>
+        </div>
+    </div>
+</nav>
+
+
+<table class="table table-light table-striped mt-5 text-center" style="width: 70% !important;margin-left: auto;margin-right: auto;">
+    <thead>
+        <tr>
+            <th scope="col">Employee ID</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Email ID</th>
+            <th scope="col">Mobile No.</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let employeeRow of empData">
+            <td>{{employeeRow.id}}</td>
+            <td>{{employeeRow.firstName}}</td>
+            <td>{{employeeRow.lastName}}</td>
+            <td>{{employeeRow.email}}</td>
+            <td>{{employeeRow.mobile}}</td>
+            <td>{{employeeRow.salary}}</td>
+            <td>
+                <button (click)="onEditEmp(employeeRow)" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" class="btn btn-info">Edit</button>
+                <button (click)="deleteEmp(employeeRow)" class="btn btn-danger mx-3">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Employee details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formValue">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">First name</label>
+                        <input type="text" class="form-control" formControlName="firstName" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Last name</label>
+                        <input type="text" formControlName="lastName" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Email ID</label>
+                        <input type="email" formControlName="email" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Mobile no.</label>
+                        <input type="number" formControlName="mobile" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Salary</label>
+                        <input type="text" formControlName="salary" class="form-control" id="exampleInputPassword1">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" *ngIf="displayAddBtn" (click)="createEmp()" class="btn btn-primary">Add</button>
+                <button type="button" *ngIf="displayUpdateBtn" (click)="updateEmp()" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+

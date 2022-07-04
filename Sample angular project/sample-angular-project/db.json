@@ -1,0 +1,40 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "firstName": "Shenal",
+      "lastName": "Peries",
+      "email": "shenal@gmail.com",
+      "mobile": 77123434,
+      "salary": "Rs.15000"
+    },
+    {
+      "id": 2,
+      "firstName": "Steve",
+      "lastName": "Smith",
+      "email": "steve@hotmail.com",
+      "mobile": 777687566,
+      "salary": "Rs.20000"
+    },
+    {
+      "id": 3,
+      "firstName": "Chamika",
+      "lastName": "Karunarathne",
+      "email": "chamika@gmail.com",
+      "mobile": 76567566,
+      "salary": "Rs.25000"
+    },
+    {
+      "id": 4,
+      "firstName": "Pathum",
+      "lastName": "Nissanka",
+      "email": "pathum@gmail.com",
+      "mobile": 77465565,
+      "salary": "Rs.45000"
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}
