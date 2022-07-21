@@ -22,7 +22,7 @@ var head;
         return node;
     }
   
-    // prints content of double linked list
+    // prints content of linked list
     function printList(node) {
         while (node != null) {
             console.log(node.data + " ");
@@ -30,6 +30,7 @@ var head;
         }
     }
 
+    // Checks whether the reversed linked list is palindrome
     function isPalindrome(head) {
   
         var value = head;
@@ -38,7 +39,7 @@ var head;
           
                 while (value != null) {
                     stack.push(value.data);
-                    value = value.next;
+                    value = value.next; 
                 }
           
                 while (head != null) {
@@ -55,7 +56,6 @@ var head;
                 return ispalin;
     }
   
-    // Driver Code
       
         head = new Node(10);
         head.next = new Node(20);
