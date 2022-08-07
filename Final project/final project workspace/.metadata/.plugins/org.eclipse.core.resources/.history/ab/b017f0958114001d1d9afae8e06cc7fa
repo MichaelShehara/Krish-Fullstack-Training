@@ -1,0 +1,190 @@
+package com.inventoryService.serviceImpl;
+
+import java.util.Comparator;
+
+
+import java.util.EmptyStackException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.inventoryService.entity.Inventory;
+import com.inventoryService.kafka.Producer;
+import com.inventoryService.repository.InventoryRepository;
+import com.inventoryService.service.InventoryService;
+import com.orderService.entity.Order;
+import com.scheduleService.service.ScheduleService;
+
+@Component
+public class InventoryServiceImpl implements InventoryService {
+
+	@Autowired
+	InventoryRepository inventoryRepository;
+	
+	@Autowired
+	private Producer kafkaProducer;
+	
+	@Autowired
+	ScheduleService scheduleService;
+
+
+	@Override
+	public void checkAvailability(Order order) {
+
+		int initialAmtForPetrol92 = 100000;
+		int initialAmtForPetrol95 = 100000;
+		int initialAmtForDiesel92 = 100000;
+		int initialAmtForDiesel95 = 100000;
+
+		Inventory inventory = new Inventory();
+
+		if (order.getTypeOfFuel().equals("Petrol 92 Oct") && initialAmtForPetrol92 != 0) {
+
+			List<Inventory> unsortedinventoryList = inventoryRepository.getByFuelType("Petrol 92 Oct");
+
+			List<Inventory> sortedinventoryList = unsortedinventoryList.stream()
+					.sorted(Comparator.comparing(Inventory::getId)).collect(Collectors.toList());
+
+			if (!sortedinventoryList.isEmpty()) {
+
+				Inventory lastElem = sortedinventoryList.get(sortedinventoryList.size() - 1);
+
+				int availableAmtForPetrol92 = lastElem.getAvailableAmount() - order.getCapacity();
+
+				inventory.setOrderId(order.getId());
+				inventory.setTypeOfFuel(order.getTypeOfFuel());
+				inventory.setAllocatedAmount(order.getCapacity());
+				inventory.setAvailableAmount(availableAmtForPetrol92);
+				inventory.setFuelStationName(order.getLocation());
+			} else {
+
+				int availableAmtForPetrol92 = initialAmtForPetrol92 - order.getCapacity();
+				initialAmtForPetrol92 = availableAmtForPetrol92;
+
+				inventory.setOrderId(order.getId());
+				inventory.setTypeOfFuel(order.getTypeOfFuel());
+				inventory.setAllocatedAmount(order.getCapacity());
+				inventory.setAvailableAmount(availableAmtForPetrol92);
+				inventory.setFuelStationName(order.getLocation());
+
+			}
+			
+			scheduleService.assignVehicles(order);
+			inventoryRepository.save(inventory);
+			kafkaProducer.publishStringToTopic("Fuel allocated succesfully!");
+			
+
+		} else if (order.getTypeOfFuel().equals("Petrol 95 Oct") && initialAmtForPetrol95 != 0) {
+
+			List<Inventory> unsortedinventoryList = inventoryRepository.getByFuelType("Petrol 95 Oct");
+
+			List<Inventory> sortedinventoryList = unsortedinventoryList.stream()
+					.sorted(Comparator.comparing(Inventory::getId)).collect(Collectors.toList());
+
+			if (!sortedinventoryList.isEmpty()) {
+
+				Inventory lastElem = sortedinventoryList.get(sortedinventoryList.size() - 1);
+
+				int availableAmtForPetrol95 = lastElem.getAvailableAmount() - order.getCapacity();
+
+				inventory.setOrderId(order.getId());
+				inventory.setTypeOfFuel(order.getTypeOfFuel());
+				inventory.setAllocatedAmount(order.getCapacity());
+				inventory.setAvailableAmount(availableAmtForPetrol95);
+				inventory.setFuelStationName(order.getLocation());
+			} else {
+
+				int availableAmtForPetrol95 = initialAmtForPetrol95 - order.getCapacity();
+
+				inventory.setOrderId(order.getId());
+				inventory.setTypeOfFuel(order.getTypeOfFuel());
+				inventory.setAllocatedAmount(order.getCapacity());
+				inventory.setAvailableAmount(availableAmtForPetrol95);
+				inventory.setFuelStationName(order.getLocation());
+
+			}
+
+			scheduleService.assignVehicles(order);
+			inventoryRepository.save(inventory);
+			kafkaProducer.publishStringToTopic("Fuel allocated succesfully!");
+
+		} else if (order.getTypeOfFuel().equals("Diesel 92 Oct") && initialAmtForDiesel92 != 0) {
+
+			List<Inventory> unsortedinventoryList = inventoryRepository.getByFuelType("Diesel 92 Oct");
+
+			List<Inventory> sortedinventoryList = unsortedinventoryList.stream()
+					.sorted(Comparator.comparing(Inventory::getId)).collect(Collectors.toList());
+
+			if (!sortedinventoryList.isEmpty()) {
+
+				Inventory lastElem = sortedinventoryList.get(sortedinventoryList.size() - 1);
+
+				int availableAmtForDiesel92 = lastElem.getAvailableAmount() - order.getCapacity();
+
+				inventory.setOrderId(order.getId());
+				inventory.setTypeOfFuel(order.getTypeOfFuel());
+				inventory.setAllocatedAmount(order.getCapacity());
+				inventory.setAvailableAmount(availableAmtForDiesel92);
+				inventory.setFuelStationName(order.getLocation());
+			} else {
+
+				int availableAmtForDiesel92 = initialAmtForDiesel92 - order.getCapacity();
+
+				inventory.setOrderId(order.getId());
+				inventory.setTypeOfFuel(order.getTypeOfFuel());
+				inventory.setAllocatedAmount(order.getCapacity());
+				inventory.setAvailableAmount(availableAmtForDiesel92);
+				inventory.setFuelStationName(order.getLocation());
+
+			}
+
+			scheduleService.assignVehicles(order);
+			inventoryRepository.save(inventory);
+			kafkaProducer.publishStringToTopic("Fuel allocated succesfully!");
+
+		} else if (order.getTypeOfFuel().equals("Diesel 95 Oct") && initialAmtForDiesel95 != 0) {
+
+			List<Inventory> unsortedinventoryList = inventoryRepository.getByFuelType("Diesel 95 Oct");
+
+			List<Inventory> sortedinventoryList = unsortedinventoryList.stream()
+					.sorted(Comparator.comparing(Inventory::getId)).collect(Collectors.toList());
+
+			if (!sortedinventoryList.isEmpty()) {
+
+				Inventory lastElem = sortedinventoryList.get(sortedinventoryList.size() - 1);
+
+				int availableAmtForDiesel95 = lastElem.getAvailableAmount() - order.getCapacity();
+
+				inventory.setOrderId(order.getId());
+				inventory.setTypeOfFuel(order.getTypeOfFuel());
+				inventory.setAllocatedAmount(order.getCapacity());
+				inventory.setAvailableAmount(availableAmtForDiesel95);
+				inventory.setFuelStationName(order.getLocation());
+			} else {
+
+				int availableAmtForDiesel95 = initialAmtForDiesel95 - order.getCapacity();
+
+				inventory.setOrderId(order.getId());
+				inventory.setTypeOfFuel(order.getTypeOfFuel());
+				inventory.setAllocatedAmount(order.getCapacity());
+				inventory.setAvailableAmount(availableAmtForDiesel95);
+				inventory.setFuelStationName(order.getLocation());
+
+			}
+
+			scheduleService.assignVehicles(order);
+			inventoryRepository.save(inventory);
+			kafkaProducer.publishStringToTopic("Fuel allocated succesfully!");
+			
+		} else {
+			kafkaProducer.publishStringToTopic("Sorry...no sufficient amount of fuel available!");
+
+			throw new EmptyStackException();
+
+		}
+
+	}
+
+}

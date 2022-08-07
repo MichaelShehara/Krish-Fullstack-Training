@@ -1,0 +1,9 @@
+package com.inventoryService.service;
+
+import com.inventoryService.entity.Inventory;
+
+public interface InventoryService {
+	
+	Inventory checkAvailability( );
+
+}

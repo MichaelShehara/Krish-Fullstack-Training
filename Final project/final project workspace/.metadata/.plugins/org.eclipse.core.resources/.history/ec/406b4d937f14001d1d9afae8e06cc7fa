@@ -1,0 +1,12 @@
+package com.scheduleService.service;
+
+import org.springframework.stereotype.Service;
+
+import com.orderService.entity.Order;
+import com.scheduleService.entity.Schedule;
+
+public interface ScheduleService {
+	
+	Schedule assignVehicles(Order order);
+
+}

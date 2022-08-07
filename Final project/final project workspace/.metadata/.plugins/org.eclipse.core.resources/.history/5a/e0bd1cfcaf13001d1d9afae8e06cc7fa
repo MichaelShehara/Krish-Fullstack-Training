@@ -1,0 +1,95 @@
+package com.inventoryService.serviceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.inventoryService.entity.Inventory;
+import com.inventoryService.repository.InventoryRepository;
+import com.inventoryService.service.InventoryService;
+import com.kafkaProducerConsumer.service.Producer;
+import com.orderService.entity.Order;
+
+
+@Service
+public class InventoryServiceImpl implements InventoryService {
+	
+	@Autowired
+	InventoryRepository inventoryRepository;
+	
+//	@Autowired
+//	Producer kafkaProducer;
+
+	@Override
+	public Inventory checkAvailability(Order order) {
+
+		int initialAmtForPetrol92 = 100000;
+		int initialAmtForPetrol95 = 100000;
+		int initialAmtForDiesel92 = 100000;
+		int initialAmtForDiesel95 = 100000;
+		
+		Inventory inventory = new Inventory();
+
+		if (order.getTypeOfFuel().equals("Petrol 92 Oct") && initialAmtForPetrol92 != 0) {
+
+			int availableAmtForPetrol92 = initialAmtForPetrol92 - order.getCapacity();
+			availableAmtForPetrol92 = initialAmtForPetrol92;
+			
+			inventory.setTypeOfFuel(order.getTypeOfFuel());
+			inventory.setAllocatedAmount(order.getCapacity());
+			inventory.setAvailableAmount(availableAmtForPetrol92);
+			inventory.setFuelStationName(order.getLocation());
+			
+			
+			return inventoryRepository.save(inventory);
+
+		} else if (order.getTypeOfFuel().equals("Petrol 95 Oct") && initialAmtForPetrol95 != 0) {
+
+			int availableAmtForPetrol95 = initialAmtForPetrol95 - order.getCapacity();
+			initialAmtForPetrol95 = availableAmtForPetrol95;
+			
+			inventory.setTypeOfFuel(order.getTypeOfFuel());
+			inventory.setAllocatedAmount(order.getCapacity());
+			inventory.setAvailableAmount(availableAmtForPetrol95);
+			inventory.setFuelStationName(order.getLocation());
+			
+			
+			return inventoryRepository.save(inventory);
+
+		} else if (order.getTypeOfFuel().equals("Diesel 92 Oct") && initialAmtForDiesel92 != 0) {
+
+			int availableAmtForDiesel92 = initialAmtForDiesel92 - order.getCapacity();
+			initialAmtForDiesel92 = availableAmtForDiesel92;
+			
+			inventory.setTypeOfFuel(order.getTypeOfFuel());
+			inventory.setAllocatedAmount(order.getCapacity());
+			inventory.setAvailableAmount(availableAmtForDiesel92);
+			inventory.setFuelStationName(order.getLocation());
+			
+			
+			return inventoryRepository.save(inventory);
+
+		} else if (order.getTypeOfFuel().equals("Diesel 95 Oct") && initialAmtForDiesel95 != 0) {
+
+			int availableAmtForDiesel95 = initialAmtForDiesel95 - order.getCapacity();
+			initialAmtForDiesel95 = availableAmtForDiesel95;
+			
+			inventory.setTypeOfFuel(order.getTypeOfFuel());
+			inventory.setAllocatedAmount(order.getCapacity());
+			inventory.setAvailableAmount(availableAmtForDiesel95);
+			inventory.setFuelStationName(order.getLocation());
+			
+			
+			return inventoryRepository.save(inventory);
+			
+		} else {
+			//kafkaProducer.publishStringToTopic("Sorry...no sufficient amount of fuel available!");
+			
+			return new Inventory();
+			
+		}
+		
+
+		
+	}
+
+}

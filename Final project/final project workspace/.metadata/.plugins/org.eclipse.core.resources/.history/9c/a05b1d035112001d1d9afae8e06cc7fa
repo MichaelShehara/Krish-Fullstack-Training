@@ -1,0 +1,5 @@
+package com.scheduleService.entity;
+
+public class Schedule {
+
+}

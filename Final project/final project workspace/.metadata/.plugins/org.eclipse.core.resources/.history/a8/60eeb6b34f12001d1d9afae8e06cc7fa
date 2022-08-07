@@ -1,0 +1,5 @@
+package com.scheduleService.serviceImpl;
+
+public class DispatchServiceImpl {
+
+}

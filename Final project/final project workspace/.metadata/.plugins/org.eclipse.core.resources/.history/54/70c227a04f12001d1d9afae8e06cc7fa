@@ -1,0 +1,9 @@
+package com.dispatchService.service;
+
+import com.orderService.entity.Order;
+
+public interface DispatchService {
+	
+	void assignVehicle(Order order);
+
+}

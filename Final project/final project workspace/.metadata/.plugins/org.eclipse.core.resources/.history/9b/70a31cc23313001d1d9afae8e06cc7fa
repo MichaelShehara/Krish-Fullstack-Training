@@ -1,0 +1,10 @@
+package com.inventoryService.service;
+
+import com.inventoryService.entity.Inventory;
+import com.orderService.entity.Order;
+
+public interface InventoryService {
+	
+	boolean checkAvailability(Order order);
+
+}

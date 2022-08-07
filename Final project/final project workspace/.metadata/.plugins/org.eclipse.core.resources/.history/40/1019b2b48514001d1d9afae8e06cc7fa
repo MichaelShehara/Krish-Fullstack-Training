@@ -1,0 +1,55 @@
+package com.scheduleService.serviceImpl;
+
+import java.time.LocalDate;
+
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ThreadLocalRandom;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import com.orderService.entity.Order;
+import com.scheduleService.entity.Schedule;
+import com.scheduleService.kafka.Producer;
+import com.scheduleService.repository.ScheduleRepositiory;
+import com.scheduleService.service.ScheduleService;
+
+
+
+public class ScheduleServiceImpl implements ScheduleService {
+	
+	@Autowired
+	ScheduleRepositiory scheduleRepository;
+	
+	@Autowired
+	//Producer kafkaProducer;
+
+	@Override
+	public void assignVehicles(Order order) {
+		String[] vehicleNumbers = { "CEB-6754", "BEG-8905", "CEA-5643", "65-7896", "KK-0958", "PA-4534" };
+		int randIdx = ThreadLocalRandom.current().nextInt(vehicleNumbers.length);
+		String randomVehicleNo = vehicleNumbers[randIdx];
+
+		Schedule schedule = new Schedule();
+		schedule.setVehicleNo(randomVehicleNo);
+
+		LocalDate startDate = LocalDate.now().plusDays(1); 
+		long start = startDate.toEpochDay();
+
+		LocalDate endDate = LocalDate.now().plusDays(7);
+		long end = endDate.toEpochDay();
+
+		long randomEpochDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();
+		LocalDate unFormattedDate = LocalDate.ofEpochDay(randomEpochDay);
+		String formattedDate = unFormattedDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+		schedule.setScheduledAt(formattedDate);
+		schedule.setOrderId(order.getId());
+		scheduleRepository.save(schedule);
+		//kafkaProducer.publishStringToTopic("Delivery scheduled");
+	}
+
+}

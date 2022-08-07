@@ -1,0 +1,81 @@
+package com.orderService.serviceImpl;
+
+import java.util.List;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.orderService.kafka.Producer;
+import com.orderService.entity.Order;
+import com.orderService.repository.OrderRepository;
+import com.orderService.service.OrderService;
+
+@Service
+public class OrderServiceImpl implements OrderService {
+
+	@Autowired
+	OrderRepository orderRepository;
+	
+	@Autowired
+	Producer kafkaProducer;
+
+	@Override
+	public Order create(Order order) {
+
+		kafkaProducer.publishStringToTopic("Order created successfully!");
+		return orderRepository.save(order);
+		
+	}
+
+	@Override
+	public Order findById(Long id) {
+
+		Order order = orderRepository.getById(id);
+
+		if (order != null) {
+
+			return order;
+		} else {
+
+			return new Order();
+		}
+
+	}
+
+	@Override
+	public List<Order> findAll() {
+
+		return orderRepository.findAll();
+	}
+
+	@Override
+	public Order update(Order order) {
+
+		Order entity = orderRepository.getById(order.getId());
+
+		if (entity != null) {
+			
+			entity.setCapacity(order.getCapacity());
+			entity.setLocation(order.getLocation());
+			entity.setName(order.getName());
+			entity.setStatus(order.getStatus());
+			entity.setTypeOfFuel(order.getTypeOfFuel());
+
+			kafkaProducer.publishStringToTopic("Order updated successfully!");
+			return orderRepository.save(entity);
+		} else {
+			 return entity;
+		}
+		 
+		
+	
+	}
+
+	@Override
+	public Order getOrderByName(String name) {
+		return orderRepository.findOrderByName(name);
+	}
+
+}

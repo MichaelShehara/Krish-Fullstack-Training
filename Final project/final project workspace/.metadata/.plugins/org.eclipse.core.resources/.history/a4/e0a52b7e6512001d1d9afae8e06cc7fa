@@ -1,0 +1,62 @@
+package com.scheduleService.entity;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.orderService.entity.Order;
+
+@Entity
+@Table(name = "Schedule-order")
+public class Schedule {
+
+	@Id
+	@GeneratedValue
+	int id;
+
+	@Column(name = "vehicleNo")
+	String vehicleNo;
+
+	@Column(name = "scheduledAt")
+	Date scheduledAt;
+
+	@Column(name = "orderId")
+	Order orderId;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getVehicleNo() {
+		return vehicleNo;
+	}
+
+	public void setVehicleNo(String vehicleNo) {
+		this.vehicleNo = vehicleNo;
+	}
+
+	public Date getScheduledAt() {
+		return scheduledAt;
+	}
+
+	public void setScheduledAt(Date scheduledAt) {
+		this.scheduledAt = scheduledAt;
+	}
+
+	public Order getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Order orderId) {
+		this.orderId = orderId;
+	}
+
+}

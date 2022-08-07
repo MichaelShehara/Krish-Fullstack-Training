@@ -1,0 +1,86 @@
+<html>
+
+<body>
+    <div id="order">
+        <div class="container">
+            <div id="order-row" class="row justify-content-center align-items-center">
+                <div id="order-column" class="col-md-6">
+                    <div id="order-box" class="col-md-12">
+                        <form id="order-form" class="container" [formGroup]="orderForm">
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <h2>Submit your order...
+                                        <span class="pull-right">
+                                            <button class="btn btn-secondary" style="float: right; margin-right: -6em;" [routerLink]="['/login']">Logout</button>
+                                        </span>
+                                    </h2>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control"
+                                        placeholder="Enter the username of your fuel station" formControlName="name"
+                                        [(ngModel)]="order.name">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Location</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control"
+                                        placeholder="Enter the location of your fuel station" formControlName="location"
+                                        [(ngModel)]="order.location">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Fuel type</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" aria-label="Default select example"
+                                        formControlName="typeOfFuel" [(ngModel)]="order.typeOfFuel">
+                                        <option selected>Select fuel type</option>
+                                        <option value="Petrol 92 Oct">Petrol 92 Oct</option>
+                                        <option value="Petrol 95 Oct">Petrol 95 Oct</option>
+                                        <option value="Diesel 92 Oct">Diesel 92 Oct</option>
+                                        <option value="Diesel 95 Oct">Diesel 95 Oct</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Capacity</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" aria-label="Default select example"
+                                        formControlName="capacity" [(ngModel)]="order.capacity">
+                                        <option selected>Select fuel capacity</option>
+                                        <option value="3300">3300L</option>
+                                        <option value="6600">6600L</option>
+                                        <option value="13200">13200L</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <button type="submit" (click)="submitOrder()" class="btn btn-primary"
+                                        style="margin-right: 20px;">Submit</button>
+                                    <button type="reset" class="btn btn-secondary">Reset</button>
+                                    <button class="btn btn-primary" style="float: right; margin-right: -6em;"
+                                        [routerLink]="['/order-status']">Check order status</button>
+                                </div>
+                            </div>
+                            <br>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

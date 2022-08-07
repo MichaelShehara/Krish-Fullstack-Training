@@ -1,0 +1,51 @@
+package com.inventoryService.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Inventory")
+public class Inventory {
+
+	@Id
+	@GeneratedValue
+	int id;
+	String typeOfFuel;
+	int availability;
+	String fuelStationName;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTypeOfFuel() {
+		return typeOfFuel;
+	}
+
+	public void setTypeOfFuel(String typeOfFuel) {
+		this.typeOfFuel = typeOfFuel;
+	}
+
+	public int getAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(int availability) {
+		this.availability = availability;
+	}
+
+	public String getFuelStationName() {
+		return fuelStationName;
+	}
+
+	public void setFuelStationName(String fuelStationName) {
+		this.fuelStationName = fuelStationName;
+	}
+
+}

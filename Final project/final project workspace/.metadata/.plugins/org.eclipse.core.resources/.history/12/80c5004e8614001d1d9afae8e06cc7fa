@@ -1,0 +1,5 @@
+package com.scheduleService.controller;
+
+public class ScheduleController {
+
+}

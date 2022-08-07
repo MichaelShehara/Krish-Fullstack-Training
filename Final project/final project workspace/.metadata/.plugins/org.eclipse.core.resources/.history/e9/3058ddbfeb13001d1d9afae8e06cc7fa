@@ -1,0 +1,9 @@
+package com.scheduleService.service;
+
+import com.orderService.entity.Order;
+
+public interface ScheduleService {
+	
+	void assignVehicles(Order order);
+
+}

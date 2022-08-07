@@ -1,0 +1,36 @@
+package com.inventoryService.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.inventoryService.entity.Inventory;
+import com.inventoryService.service.InventoryService;
+import com.orderService.entity.Order;
+
+
+@RestController
+@RequestMapping("/inventory")
+public class InventoryController {
+	@Autowired
+	InventoryService inventoryService;
+	
+	@PostMapping
+	public void allocateFuel(@RequestBody Order order) {
+//		kafkaProducer.publishStringToTopic("Order created");
+//		String getResponse = kafkaConsumer.consumeFromTopic(null);
+//		
+//		if(getResponse.equals("Allocation complete")) {
+//			
+//		}else {
+//			kafkaProducer.publishStringToTopic("Sorry..order can not be placed!");
+//			return null;
+//		}
+		
+		inventoryService.checkAvailability(order);
+		
+	}
+
+}

@@ -1,0 +1,5 @@
+package com.dispatchService.serviceImpl;
+
+public class DispatchServiceImpl {
+
+}

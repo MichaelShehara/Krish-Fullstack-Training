@@ -1,0 +1,52 @@
+<body>
+    <div id="order">
+        <div class="container">
+            <div id="order-row" class="row justify-content-center align-items-center">
+                <div id="order-column" class="col-md-14">
+                    <div id="order-box" class="col-md-12">
+                        <h1>Dispatch order</h1>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="term">
+                        </div>
+                        <br>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Fuel type</th>
+                                    <th scope="col">Capacity</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Allocate</th>
+                                    <th scope="col">Assign vehicle</th>
+                                    <th scope="col">Dispatch</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of orderList | filter:term">
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.location}}</td>
+                                    <td>{{item.typeOfFuel}}</td>
+                                    <td>{{item.capacity}}</td>
+                                    <td>{{item.status}}</td>
+                                    <td><button class="btn btn-primary" (click)="allocateFuel(item)" 
+                                        [disabled]="item.status != 'Pending'">Allocate</button>
+                                    </td>
+                                    <td><button class="btn btn-primary" (click)="assignVehicle(item)" 
+                                        [disabled]="item.status != 'Allocated'">Schedule
+                                            delivery</button></td>
+                                    <td><button class="btn btn-primary" (click)="dispatchOrder(item)" 
+                                        [disabled]="item.status != 'Scheduled'">Dispatch</button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-secondary" [routerLink]="['/login']">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
